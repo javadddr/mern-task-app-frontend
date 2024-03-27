@@ -9,7 +9,7 @@ function SignUp() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await fetch('https://mern-task-appjavad.onrender.com/users', { // Make sure the URL points to your backend
+    const response = await fetch('https://mern-task-app-backend-ks55.onrender.com/users', { // Make sure the URL points to your backend
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

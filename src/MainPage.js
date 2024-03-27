@@ -58,7 +58,7 @@ function MainPage() {
     const fetchUsers = async () => {
       const token = localStorage.getItem('token');
       try {
-        const response = await fetch('https://mern-task-appjavad.onrender.com/users', {
+        const response = await fetch('https://mern-task-app-backend-ks55.onrender.com/users', {
           headers: {
             'Authorization': token,
           },
@@ -97,7 +97,7 @@ function MainPage() {
  
     setIsChatExpanded(true); // Expand the chat area
     // Fetch messages between the current user and the clicked user
-    fetch(`https://mern-task-appjavad.onrender.com/messages/${currentUserId}/${user._id}`, {
+    fetch(`https://mern-task-app-backend-ks55.onrender.com/messages/${currentUserId}/${user._id}`, {
   method: 'GET',
   headers: {
     'Authorization': localStorage.getItem('token'),
@@ -136,7 +136,7 @@ function MainPage() {
     console.log('Sending message:', messageData);
   
     try {
-      const response = await fetch('https://mern-task-appjavad.onrender.com/messages', {
+      const response = await fetch('https://mern-task-app-backend-ks55.onrender.com/messages', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -149,7 +149,7 @@ function MainPage() {
         throw new Error(`Failed to send message: ${response.statusText}`);
       }
       setText('');
-      fetch(`https://mern-task-appjavad.onrender.com/messages/${currentUserId}/${toUserId}`, {
+      fetch(`https://mern-task-app-backend-ks55.onrender.com/messages/${currentUserId}/${toUserId}`, {
         method: 'GET',
         headers: {
           'Authorization': localStorage.getItem('token'),
