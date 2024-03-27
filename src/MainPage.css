@@ -220,3 +220,27 @@ ul {
 .chat-area.expanded {
   width: 100%; /* Take full width */
 }
+/* Add this at the end of your existing CSS */
+@media screen and (max-width: 768px) {
+  .user-list {
+    width: 100%; /* Full width on smaller screens */
+  }
+
+  .chat-area {
+    width: 100%; /* Full width on smaller screens */
+  }
+
+  textarea, input, button { /* Adjust form elements */
+    font-size: 16px; /* Prevent zooming on focus */
+  }
+
+  .emoji-picker {
+    bottom: 100px; /* Adjust position for better visibility */
+    left: 50%; /* Center align */
+    transform: translateX(-50%); /* Center align */
+  }
+
+  .chat-message-input, .chat-send-button button {
+    font-size: 16px; /* Increase font size for readability */
+  }
+}
