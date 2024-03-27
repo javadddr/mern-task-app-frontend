@@ -1,7 +1,8 @@
 import React, { useState, useEffect,useRef } from "react";
 import "./MainPage.css"
 import { useNavigate } from "react-router-dom";
-
+import io from 'socket.io-client';
+let socket;
 function MainPage() {
   const [users, setUsers] = useState([]);
   const [currentChatUser, setCurrentChatUser] = useState(null);
@@ -135,7 +136,19 @@ function MainPage() {
       chatArea.scrollTop = chatArea.scrollHeight;
     }
   }, [messages]); // Depend on messages to auto-scroll whenever messages change
+  useEffect(() => {
+    // Connect to Socket.IO server
+    socket = io("https://mern-task-app-backend-ks55.onrender.com"); // Use your server's URL here
   
+    socket.on('receiveMessage', (message) => {
+      // Update your state to include the new message
+      setMessages((prevMessages) => [...prevMessages, message]);
+    });
+  
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
   const sendMessage = async (toUserId, messageText) => {
     const fromUserId = localStorage.getItem('userId');
     const token = localStorage.getItem('token');
@@ -146,7 +159,7 @@ function MainPage() {
       text: messageText,
       // pic: "Optional picture URL here",
     };
-  
+    socket.emit('sendMessage', messageData);
     console.log('Sending message:', messageData);
   
     try {
