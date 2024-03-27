@@ -128,7 +128,7 @@ function MainPage() {
  
     setIsChatExpanded(true); // Expand the chat area
     // Fetch messages between the current user and the clicked user
-    fetch(`https://mern-task-app-backend-ks55.onrender.com/messages/${currentUserId}/${user._id}`, {
+    fetch(`https://mern-task-app-backend-ks55.onrender.com/api/messages/${currentUserId}/${user._id}`, {
   method: 'GET',
   headers: {
     'Authorization': localStorage.getItem('token'),
@@ -180,7 +180,7 @@ function MainPage() {
         throw new Error(`Failed to send message: ${response.statusText}`);
       }
       setText('');
-      fetch(`https://mern-task-app-backend-ks55.onrender.com/messages/${currentUserId}/${toUserId}`, {
+      fetch(`https://mern-task-app-backend-ks55.onrender.com/api/messages/${currentUserId}/${toUserId}`, {
         method: 'GET',
         headers: {
           'Authorization': localStorage.getItem('token'),
