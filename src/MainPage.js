@@ -1,5 +1,6 @@
 import React, { useState, useEffect,useRef } from "react";
 import "./MainPage.css"
+import { useNavigate } from "react-router-dom";
 
 function MainPage() {
   const [users, setUsers] = useState([]);
@@ -10,6 +11,14 @@ function MainPage() {
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const emojiPickerRef = useRef(null);
   const [isChatExpanded, setIsChatExpanded] = useState(false);
+  const navigate = useNavigate(); // Add this line at the beginning of your component
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      navigate('/login'); // Redirect to login if there's no token
+    }
+  }, [navigate]); // Include navigate in the dependency array
 
   const addEmoji = (emoji) => {
     console.log(emoji); // Should log the emoji character
@@ -53,7 +62,12 @@ function MainPage() {
     };
   }, [showEmojiPicker]);
   
-
+  const logout = () => {
+    localStorage.removeItem('token'); // Remove token from local storage
+    localStorage.removeItem('userId'); // Remove userId from local storage
+    navigate('/login'); // Redirect to login page
+  };
+  
   useEffect(() => {
     const fetchUsers = async () => {
       const token = localStorage.getItem('token');
@@ -183,6 +197,8 @@ function MainPage() {
 return (
   <div className="main-page"> {/* Apply layout styling */}
      {!isChatExpanded && (
+       <div>
+       <button onClick={logout}>Logout</button>
       <div className="user-list">
         <h2>User List:</h2>
         <ul>
@@ -192,6 +208,7 @@ return (
             </li>
           ))}
         </ul>
+      </div>
       </div>
     )}
        {currentChatUser && (
