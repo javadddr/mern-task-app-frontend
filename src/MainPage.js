@@ -12,6 +12,11 @@ function MainPage() {
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const emojiPickerRef = useRef(null);
   const [isChatExpanded, setIsChatExpanded] = useState(false);
+  const [isUserListVisible, setIsUserListVisible] = useState(true); // Assuming true as default
+
+const toggleUserListVisibility = () => {
+  setIsUserListVisible(!isUserListVisible);
+};
   const navigate = useNavigate(); // Add this line at the beginning of your component
   useEffect(() => {
     // Initialize the socket within useEffect to ensure clean-up
