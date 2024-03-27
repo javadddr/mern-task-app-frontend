@@ -167,7 +167,7 @@ function MainPage() {
     console.log('Sending message:', messageData);
   
     try {
-      const response = await fetch('https://mern-task-app-backend-ks55.onrender.com/messages', {
+      const response = await fetch('https://mern-task-app-backend-ks55.onrender.com/api/messages', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
