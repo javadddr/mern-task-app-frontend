@@ -1,6 +1,7 @@
-import React, { useState, useEffect,useRef } from "react";
-import "./MainPage.css"
+import React, { useState, useEffect, useRef } from "react";
+import "./MainPage.css";
 import { useNavigate } from "react-router-dom";
+import io from 'socket.io-client';
 
 function MainPage() {
   const [users, setUsers] = useState([]);
@@ -12,7 +13,23 @@ function MainPage() {
   const emojiPickerRef = useRef(null);
   const [isChatExpanded, setIsChatExpanded] = useState(false);
   const navigate = useNavigate(); // Add this line at the beginning of your component
+  useEffect(() => {
+    // Initialize the socket within useEffect to ensure clean-up
+    const socket = io("https://mern-task-app-backend-ks55.onrender.com");
 
+    // Listener for receiving messages
+    socket.on('receiveMessage', (message) => {
+      setMessages(prev => [...prev, message]);
+    });
+
+    // Clean-up function to run when the component unmounts or the effect re-runs
+    return () => {
+      socket.off('receiveMessage');
+      socket.disconnect();
+    };
+  }, []); // Empty dependency array means this effect runs once on mount and then on unmount
+
+  
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (!token) {
@@ -146,7 +163,7 @@ function MainPage() {
       text: messageText,
       // pic: "Optional picture URL here",
     };
-  
+ 
     console.log('Sending message:', messageData);
   
     try {
